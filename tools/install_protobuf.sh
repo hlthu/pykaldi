@@ -13,7 +13,7 @@
 #   Modifies $PATH and $PKG_CONFIG_PATH
 #
 set -e
-PROTOBUF_GIT="https://github.com/google/protobuf.git"
+PROTOBUF_GIT="-b v3.5.0 https://github.com/google/protobuf.git"
 
 PROTOBUF_DIR="$PWD/protobuf"
 
@@ -64,7 +64,7 @@ if which protoc >/dev/null; then
     if check_protoc_version $(which protoc); then
         if check_protobuf_python_package; then
             echo "Done installing Protobuf."
-            # exit 0
+            exit 0
         fi
     fi
 fi
@@ -74,7 +74,7 @@ if [ ! -d "$PROTOBUF_DIR" ]; then
     git clone $PROTOBUF_GIT $PROTOBUF_DIR
 fi
 cd "$PROTOBUF_DIR"
-git pull
+#git pull
 
 ./autogen.sh
 ./configure --prefix $PROTOBUF_DIR

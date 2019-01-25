@@ -5,6 +5,8 @@ from "matrix/kaldi-matrix-clifwrap.h" import *
 from "matrix/compressed-matrix-clifwrap.h" import *
 from "cudamatrix/cu-matrix-clifwrap.h" import *
 
+from kaldi.matrix import _matrix_wrapper
+
 from "matrix/sparse-matrix.h":
   namespace `kaldi`:
 
@@ -32,7 +34,6 @@ from "matrix/sparse-matrix.h":
             Error in case of dimension mismatch
         """
 
-      #FIXME(pavlos): This needs a C++ wrapper
       def `AddToVec` as add_to_vec(self, alpha: float, vec: VectorBase):
         """Performs vec=vec+alpha*self
 
@@ -54,6 +55,10 @@ from "matrix/sparse-matrix.h":
       @add__init__
       def `SparseVector` as from_other(self, other: SparseVector):
         """Initialization by copying the elements of other."""
+
+      @add__init__
+      def `SparseVector` as from_vector(self, vec: VectorBase):
+        """Initialization by copying the elements of vector."""
 
       def `Swap` as swap_(self, other: SparseVector) -> self:
         """Swaps the contents of self and other. Shallow swap.
@@ -192,6 +197,14 @@ from "matrix/sparse-matrix.h":
 
         Args:
             other(SparseMatrix): A sparse matrix
+        """
+
+      @add__init__
+      def `SparseMatrix` as from_matrix(self, mat: MatrixBase):
+        """Initialization by copying the elements of a matrix.
+
+        Args:
+            mat(Matrix): A matrix
         """
 
       def `Swap` as swap_(self, other: SparseMatrix) ->  self:
@@ -341,6 +354,7 @@ from "matrix/sparse-matrix.h":
             Error if type returns something other than kCompressedMatrix,
             or NumRows() != 0
         """
+
       def `SwapCompressedMatrix` as swap_compressed_matrix(self, cmat: CompressedMatrix):
         """Swaps the current compressed matrix with another(cmat)."""
 
@@ -351,9 +365,11 @@ from "matrix/sparse-matrix.h":
                Error if the type is anything other than kFullMatrix
                or NumRows() != 0
         """
+        return _matrix_wrapper(...)
 
       def `GetMatrix` as get_matrix(self) -> Matrix:
         """Outputs the contents as an instance of class Matrix."""
+        return _matrix_wrapper(...)
 
       def `SwapFullMatrix` as swap_full_matrix(self, cmat: Matrix):
         """Swap the contents of self with cmat.
@@ -370,7 +386,7 @@ from "matrix/sparse-matrix.h":
                                         trans: MatrixTransposeType = default)
 
       def `AddToMat` as add_to_mat(self, alpha: float, mat: MatrixBase,
-                   trans: MatrixTransposeType = default):
+                                   trans: MatrixTransposeType = default):
         """Performs mat=mat+alpha*self if MatrixTransposeType==kNoTrans.
            Performs mat^T=mat^T+alpha*self if MatrixTransposeType==kNoTrans.
 
@@ -450,6 +466,8 @@ from "matrix/sparse-matrix.h":
       Raises:
           Error if in.num_rows != list.length
       """
+      return _matrix_wrapper(...)
+
 
     def `FilterCompressedMatrixRows` as _filter_compressed_matrix_rows(in: CompressedMatrix, keep_rows: list<bool>)
         -> Matrix:
@@ -466,6 +484,7 @@ from "matrix/sparse-matrix.h":
       Raises:
           Error if in.num_rows != list.length
       """
+      return _matrix_wrapper(...)
 
     def `FilterGeneralMatrixRows` as _filter_general_matrix_rows(
         in: GeneralMatrix, keep_rows: list<bool>) -> GeneralMatrix:
@@ -808,3 +827,4 @@ from "matrix/sparse-matrix.h":
       Raises:
           Error if in.num_rows != list.length
       """
+      return _matrix_wrapper(...)

@@ -13,9 +13,16 @@ kaldi\.nnet3
       add_nnet
       add_nnet_components
       append_cindexes
+      append_input_frames
       apply_l2_regularization
+      apply_scales_to_input
+      apply_scales_to_output
+      attention_backward
+      attention_forward
       check_computation
+      check_model_and_io
       collapse_model
+      compile_convolution_computation
       compile_looped
       component_dot_products
       compute_command_attributes
@@ -30,14 +37,20 @@ kaldi\.nnet3
       compute_top_sort_order
       compute_variable_accesses
       consolidate_io_operations
+      consolidate_memory
       consolidate_model_update
       constrain_orthonormal
       convert_addition_to_assignment
       convert_repeated_to_block_affine
+      convert_to_indexes
+      convolve_backward_data
+      convolve_backward_params
+      convolve_forward
       create_looped_computation_request
       create_looped_computation_request_simple
       descriptor_tokenize
       dot_product
+      ensure_contiguous_property
       error_context
       error_context_from_stream
       evaluate_computation_request
@@ -53,22 +66,31 @@ kaldi\.nnet3
       generate_config_sequence_composite_block
       generate_random_simple_component
       generate_simple_nnet_training_example
+      get_attention_dot_products
+      get_chain_computation_request
       get_chunk_size
       get_commands_of_type
+      get_computation_io
       get_computation_request
+      get_indexes_for_computation
       get_max_memory_use
       get_nnet_example_size
       get_num_n_values
+      get_nx_list
+      get_t_list
       graph_has_cycles
       has_batchnorm
+      has_contiguous_property
       identify_submatrix_args
       identify_submatrix_args_in_computation
       is_simple_nnet
       is_valid_name
       limit_derivative_times
+      make_computation
       make_scc_graph
       matrix_is_unused
       max_output_time_in_request
+      merge_chain_examples
       merge_examples
       modify_nnet_ivector_period
       move_sizing_commands
@@ -83,6 +105,8 @@ kaldi\.nnet3
       optimize
       optimize_looped_computation
       optimize_memory_compression
+      pad_computation_input_time
+      pad_model_height
       parse_config_lines
       perturb_params
       print_cindex
@@ -116,10 +140,15 @@ kaldi\.nnet3
       set_dropout_test_mode
       set_learning_rate
       set_nnet_as_gradient
+      shift_chain_example_times
       snip_row_ops
+      split_locations
+      split_locations_backward
+      split_row_ops
       summarize_cu_vector
       summarize_double_vector
       summarize_vector
+      un_pad_model_height
       un_vectorize_nnet
       update_nnet_with_max_change
       variable_merging_optimization
@@ -150,6 +179,8 @@ kaldi\.nnet3
       BlockAffineComponent
       CachingOptimizingCompiler
       CachingOptimizingCompilerOptions
+      ChainExampleMerger
+      ChainObjectiveInfo
       CheckComputationOptions
       ChunkTimeInfo
       CindexSet
@@ -173,6 +204,10 @@ kaldi\.nnet3
       ConstantComponent
       ConstantFunctionComponent
       ConstantSumDescriptor
+      ConvolutionComputation
+      ConvolutionComputationIo
+      ConvolutionComputationOptions
+      ConvolutionModel
       DecodableAmNnetLoopedOnline
       DecodableAmNnetSimple
       DecodableAmNnetSimpleLooped
@@ -199,6 +234,7 @@ kaldi\.nnet3
       GeneralDescriptor
       GeneralDropoutComponent
       GeneralDropoutComponentPrecomputedIndexes
+      GruNonlinearityComponent
       Index
       IndexSet
       IoSpecification
@@ -212,6 +248,15 @@ kaldi\.nnet3
       NaturalGradientRepeatedAffineComponent
       NetworkNode
       Nnet
+      NnetBatchComputer
+      NnetBatchComputerOptions
+      NnetBatchDecoder
+      NnetBatchInference
+      NnetChainComputeProb
+      NnetChainExample
+      NnetChainSupervision
+      NnetChainTrainer
+      NnetChainTrainingOptions
       NnetComputation
       NnetComputeOptions
       NnetComputeProb
@@ -234,6 +279,7 @@ kaldi\.nnet3
       OffsetForwardingDescriptor
       OnlineNaturalGradient
       OptionalSumDescriptor
+      OutputGruNonlinearityComponent
       PerDimObjectiveInfo
       PerElementOffsetComponent
       PerElementScaleComponent
@@ -260,6 +306,7 @@ kaldi\.nnet3
       SumGroupComponent
       SwitchingForwardingDescriptor
       TanhComponent
+      TdnnComponent
       TimeHeightConvolutionComponent
       UpdatableComponent
       UtteranceSplitter

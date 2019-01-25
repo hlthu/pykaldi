@@ -74,12 +74,14 @@ def get_linear_symbol_sequence(fst):
         fst: The input FST.
 
     Returns:
-        A tuple of `(isymbols: List[int], osymbols: List[int], total_weight)`.
+        The tuple (isymbols, osymbols, total_weight).
     """
     if isinstance(fst, _fst.StdFst):
         return _fstext_utils_inl._get_linear_symbol_sequence_from_std(fst)
     elif isinstance(fst, _fst.LatticeFst):
         return _fstext_shims._get_linear_symbol_sequence_from_lattice(fst)
+    elif isinstance(fst, _fst.CompactLatticeFst):
+        return _fstext_shims._get_linear_symbol_sequence_from_compact_lattice(fst)
     else:
         raise TypeError("Input FST arc type is not supported.")
 

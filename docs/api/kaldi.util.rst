@@ -5,6 +5,17 @@ kaldi\.util
 
    
    
+   .. rubric:: Functions
+
+   .. autosummary::
+      :nosignatures:
+   
+      levenshtein_alignment
+      levenshtein_edit_distance
+      levenshtein_edit_distance_conventional
+      levenshtein_edit_distance_str
+      levenshtein_edit_distance_str_conventional
+   
    
 
    
@@ -14,6 +25,7 @@ kaldi\.util
    .. autosummary::
       :nosignatures:
    
+      ConstIntegerSet
       TaskSequencerConfig
    
    
@@ -123,6 +135,7 @@ kaldi\.util\.table
       FloatPairVectorWriter
       FloatWriter
       FstWriter
+      GaussPostWriter
       IntPairVectorWriter
       IntVectorVectorWriter
       IntVectorWriter
@@ -131,7 +144,9 @@ kaldi\.util\.table
       LatticeWriter
       LogFstWriter
       MatrixWriter
+      NnetChainExampleWriter
       NnetExampleWriter
+      PosteriorWriter
       RandomAccessBoolReader
       RandomAccessCompactLatticeReader
       RandomAccessDoubleMatrixReader
@@ -143,6 +158,7 @@ kaldi\.util\.table
       RandomAccessFloatReader
       RandomAccessFloatReaderMapped
       RandomAccessFstReader
+      RandomAccessGaussPostReader
       RandomAccessIntPairVectorReader
       RandomAccessIntReader
       RandomAccessIntVectorReader
@@ -152,9 +168,12 @@ kaldi\.util\.table
       RandomAccessLogFstReader
       RandomAccessMatrixReader
       RandomAccessMatrixReaderMapped
+      RandomAccessNnetChainExampleReader
       RandomAccessNnetExampleReader
+      RandomAccessPosteriorReader
       RandomAccessVectorReader
       RandomAccessVectorReaderMapped
+      RandomAccessWaveInfoReader
       RandomAccessWaveReader
       RnnlmExampleWriter
       RspecifierOptions
@@ -167,6 +186,7 @@ kaldi\.util\.table
       SequentialFloatPairVectorReader
       SequentialFloatReader
       SequentialFstReader
+      SequentialGaussPostReader
       SequentialIntPairVectorReader
       SequentialIntReader
       SequentialIntVectorReader
@@ -175,9 +195,12 @@ kaldi\.util\.table
       SequentialLatticeReader
       SequentialLogFstReader
       SequentialMatrixReader
+      SequentialNnetChainExampleReader
       SequentialNnetExampleReader
+      SequentialPosteriorReader
       SequentialRnnlmExampleReader
       SequentialVectorReader
+      SequentialWaveInfoReader
       SequentialWaveReader
       VectorWriter
       WaveWriter

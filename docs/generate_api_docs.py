@@ -39,7 +39,7 @@ with open("api.rst", "w") as api, \
      open("modules.rst", "w") as modules:
 
     print(".. toctree::\n   :caption: API Guide\n   :hidden:\n", file=api)
-    print("   {}/kaldi".format(args.out_dir), file=api)
+    # print("   {}/kaldi".format(args.out_dir), file=api)
     print(".. autosummary::\n   :toctree: {}\n".format(args.out_dir),
           file=packages)
     print(".. autosummary::\n   :toctree: {}\n".format(args.out_dir),
@@ -50,10 +50,14 @@ with open("api.rst", "w") as api, \
                                                    onerror=lambda x: None):
         if modname.split(".")[-1][0] == "_" and not args.include_private:
             continue
+        if modname == "kaldi.itf":
+            continue
         if ispkg:
             print("   {}/{}".format(args.out_dir, modname), file=api)
             print("   {}".format(modname), file=packages)
         else:
+            if len(modname.split(".")) == 2:
+                print("   {}/{}".format(args.out_dir, modname), file=api)
             print("   {}".format(modname), file=modules)
 
 ##################################################
@@ -73,7 +77,9 @@ for importer, modname, ispkg in pkgutil.walk_packages(path=kaldi.__path__,
                                                       onerror=lambda x: None):
     if modname.split(".")[-1][0] == "_" and not args.include_private:
         continue
-    if not ispkg:
+    if modname == "kaldi.itf":
+        continue
+    if not ispkg and len(modname.split(".")) > 2:
         mod_file = "{}.rst".format(modname)
         mod_path = os.path.join(args.out_dir, mod_file)
 
@@ -100,6 +106,8 @@ for importer, modname, ispkg in pkgutil.walk_packages(path=kaldi.__path__,
                                                       prefix=kaldi.__name__+'.',
                                                       onerror=lambda x: None):
     if modname.split(".")[-1][0] == "_" and not args.include_private:
+        continue
+    if modname == "kaldi.itf":
         continue
     if ispkg:
         pkg_file = "{}.rst".format(modname)

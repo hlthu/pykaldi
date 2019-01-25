@@ -5,6 +5,7 @@ from . import _determinize_lattice_pruned as _dlp
 from . import _lattice_functions as _lat_fun
 
 from ._confidence import *
+from ._compose_lattice_pruned import *
 from ._determinize_lattice_pruned import *
 from ._lattice_functions import *
 from ._minimize_lattice import *
@@ -95,10 +96,10 @@ def determinize_lattice_phone_pruned(ifst, trans_model, prune,
     """
     if opts is None:
         opts = DeterminizeLatticePhonePrunedOptions()
-    if not destructive or not isinstance(ifst, _api.MutableFstBase):
+    if not destructive or not isinstance(ifst, _api._MutableFstBase):
         ifst = _fst.LatticeVectorFst(ifst)
     ofst = _fst.CompactLatticeVectorFst()
-    success = _dlp._determinize_lattice_phone_pruned_wrapper(ifst, trans_model,
+    success = _dlp._determinize_lattice_phone_pruned_wrapper(trans_model, ifst,
                                                              prune, ofst, opts)
     if not success:
         logging.warning(

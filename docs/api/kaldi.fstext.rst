@@ -20,6 +20,7 @@ kaldi\.fstext
       epsnormalize
       equal
       equivalent
+      indices_to_symbols
       intersect
       isomorphic
       prune
@@ -35,6 +36,7 @@ kaldi\.fstext
       shortestdistance
       shortestpath
       statemap
+      symbols_to_indices
       synchronize
       write_fst_kaldi
    
@@ -100,6 +102,7 @@ kaldi\.fstext
       LogVectorFstMutableArcIterator
       LogVectorFstStateIterator
       LogWeight
+      MatchType
       StdArc
       StdConstFst
       StdConstFstArcIterator
@@ -151,18 +154,21 @@ kaldi\.fstext\.special
    
       add_subsequential_loop
       compose_context
-      compose_context_fst
+      compose_context_left_biphone
       compose_deterministic_on_demand_fst
       create_ilabel_info_symbol_table
       determinize_lattice
       determinize_star
       determinize_star_in_log
+      get_encoding_multiple
       push_in_log
       push_special
       read_ilabel_info
       remove_eps_local
       table_compose
       table_compose_cache
+      table_compose_cache_lattice
+      table_compose_lattice
       write_ilabel_info
    
    
@@ -174,15 +180,17 @@ kaldi\.fstext\.special
    .. autosummary::
       :nosignatures:
    
+      LatticeTableComposeCache
+      NonterminalValues
+      ScaleDeterministicOnDemandFst
       StdBackoffDeterministicOnDemandFst
       StdCacheDeterministicOnDemandFst
       StdComposeDeterministicOnDemandFst
-      StdContextFst
-      StdContextFstArcIterator
-      StdContextFstStateIterator
       StdDeterministicOnDemandFst
+      StdInverseContextFst
+      StdInverseLeftBiphoneContextFst
+      StdTableComposeCache
       StdUnweightedNgramFst
-      TableComposeCache
       TableComposeOptions
       TableMatcherOptions
    
@@ -235,6 +243,7 @@ kaldi\.fstext\.utils
       minimize_encoded_std_fst
       nbest_as_fsts
       phi_compose
+      phi_compose_lattice
       preceding_input_symbols_are_same
       propagate_final
       remove_alignments_from_compact_lattice

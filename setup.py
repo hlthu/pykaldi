@@ -22,7 +22,7 @@ def check_output(*args, **kwargs):
 # Set minimum version requirements for external dependencies
 ################################################################################
 
-KALDI_MIN_REQUIRED = '6e6396e406c155b89f54313e15138e01bc61c230'
+KALDI_MIN_REQUIRED = '9daa67c4a2d4c20bdaf1ff177a464c963d6aeda2'
 
 ################################################################################
 # Check variables / find programs
@@ -34,18 +34,15 @@ CLIF_MATCHER = os.getenv('CLIF_MATCHER')
 KALDI_DIR = os.getenv('KALDI_DIR')
 CWD = os.path.dirname(os.path.abspath(__file__))
 BUILD_DIR = os.path.join(CWD, 'build')
-NPROC = check_output(['getconf', '_NPROCESSORS_ONLN'])
-MAKE_NUM_JOBS = os.getenv('MAKE_NUM_JOBS', NPROC)
-
 
 if not PYCLIF:
-    PYCLIF = os.path.join(sys.prefix, 'bin/clif-matcher')
+    PYCLIF = os.path.join(sys.prefix, 'bin/pyclif')
 PYCLIF = os.path.abspath(PYCLIF)
 
 if not (os.path.isfile(PYCLIF) and os.access(PYCLIF, os.X_OK)):
     try:
         PYCLIF = check_output(['which', 'pyclif'])
-    except OSError:
+    except subprocess.CalledProcessError:
         print("\nCould not find pyclif.\nPlease add pyclif binary to your PATH "
              "or set PYCLIF environment variable.", file=sys.stderr)
         sys.exit(1)
@@ -117,7 +114,17 @@ if KALDI_TFRNNLM:
                               "bazel-bin", "tensorflow")
     subprocess.check_call(["rm", "Makefile"])
 
-MAKE_ARGS = []
+MAKE_NUM_JOBS = os.getenv('MAKE_NUM_JOBS')
+if not MAKE_NUM_JOBS:
+    # This is the logic ninja uses to guess the number of parallel jobs.
+    NPROC = int(check_output(['getconf', '_NPROCESSORS_ONLN']))
+    if NPROC < 2:
+        MAKE_NUM_JOBS = '2'
+    elif NPROC == 2:
+        MAKE_NUM_JOBS = '3'
+    else:
+        MAKE_NUM_JOBS = str(NPROC + 2)
+MAKE_ARGS = ['-j', MAKE_NUM_JOBS]
 try:
     import ninja
     CMAKE_GENERATOR = '-GNinja'
@@ -127,8 +134,8 @@ try:
 except ImportError:
     CMAKE_GENERATOR = ''
     MAKE = 'make'
-    if MAKE_NUM_JOBS:
-        MAKE_ARGS += ['-j', MAKE_NUM_JOBS]
+    if DEBUG:
+        MAKE_ARGS += ['-d']
 
 if DEBUG:
     print("#"*50)
